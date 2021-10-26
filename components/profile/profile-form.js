@@ -1,5 +1,5 @@
 import classes from './profile-form.module.css';
-import {useRef } from 'react'
+import { useRef } from 'react'
 
 function ProfileForm() {
 
@@ -8,17 +8,18 @@ function ProfileForm() {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    const entOldPass = event.target.value;
-    const entNewPassword = event.target.value
+
+    const entOldPass = oldPasswordRef.current.value;
+    const entNewPassword = newsPasswordRef.current.value
 
     const enteredPassworsd = {
       oldPassword: entOldPass,
       newPassword: entNewPassword
     }
     const req = await fetch('/api/user/change-password', {
-      method: 'PATCH',  
-      body: JSON.stringify(enteredPassworsd), 
-      contentType: 'application/json'
+      method: 'PATCH',
+      body: JSON.stringify(enteredPassworsd),
+      headers: { 'Content-Type': 'application/json' }
     })
 
     const res = await req.json()
@@ -33,7 +34,7 @@ function ProfileForm() {
       </div>
       <div className={classes.control}>
         <label htmlFor='old-password'>Old Password</label>
-        <input type='password' id='old-password'  ref={oldPasswordRef} />
+        <input type='password' id='old-password' ref={oldPasswordRef} />
       </div>
       <div className={classes.action}>
         <button>Change Password</button>
