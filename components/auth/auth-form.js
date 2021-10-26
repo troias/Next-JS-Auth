@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import classes from './auth-form.module.css';
-import { signIn }from 'next-auth/client'
+import { signIn } from 'next-auth/client'
+import { useRouter } from 'next/router'
 
 const createUser = async (userData) => {
 
@@ -20,7 +21,7 @@ const createUser = async (userData) => {
 
 function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
-
+  const router = useRouter()
   const emailRef = useRef();
   const passRef = useRef();
 
@@ -43,20 +44,25 @@ function AuthForm() {
     if (isLogin) {
 
       const result = await signIn('credentials', {
-        redirect: false, 
-        email: userData.email, 
+        redirect: false,
+        email: userData.email,
         password: userData.password
       })
 
-      console.log("result", result)
+      if (!result.error) {
+        // localStorage.setItem('result')
+        router.replace('/profile')
+      }
+
+     
     } else {
       try {
 
         const result = await createUser(userData)
-        console.log("result", result)
+        
 
       } catch (error) {
-        console.log("error")
+       
       }
 
     }

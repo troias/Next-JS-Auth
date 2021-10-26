@@ -29,7 +29,7 @@ const handler = async (req, res) => {
         const existingUser = await client.db().collection('users').findOne({
             email: email
         })
-        // console.log("client", client)
+     
 
         if (existingUser) {
             res.status(422).json({ message: "user already exists"})
@@ -40,7 +40,7 @@ const handler = async (req, res) => {
         const userData = {email, hashedPassword}
     
         const result = await insertNewUser(client, 'users', userData)
-        console.log("result", result)
+    
         res.status(201).json({ message: result })
         client.close()
     }

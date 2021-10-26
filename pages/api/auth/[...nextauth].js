@@ -30,7 +30,8 @@ export default NextAuth({
                     }
                     
                     client.close()
-                    console.log("user", user.hashedPassword)
+                    
+                    
                      return {
                         email: user.email,
                     }
